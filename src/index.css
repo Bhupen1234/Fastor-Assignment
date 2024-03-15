@@ -1,0 +1,33 @@
+:root{
+  --color-primary:rgba(255, 109, 106, 1);
+  --color-black:rgba(30, 35, 44, 1);
+  --color-cement:rgba(131, 139, 161, 1);
+}
+
+*::before,
+*::after{
+  box-sizing: border-box;
+}
+*{
+ margin: 0;
+}
+
+html,body{
+  height: 100%;
+}
+body{
+  font-family: "Urbanist",sans-serif !important;
+  line-height: 1.5;
+
+  overflow-x: hidden;
+}
+
+
+img,svg{
+  display: block;
+  max-width: 100%;
+}
+
+
+
+ 
