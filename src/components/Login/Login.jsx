@@ -1,11 +1,22 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from "./Login.module.css"
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import Register from '../Register/Register';
 const Login = () => {
     const [otp, setOtp] = useState(['', '', '', '', '', '']);
 
     const [loader,setLoader]=useState(false)
+    const navigate = useNavigate();
 
+    useEffect(()=>{
+       if(localStorage.getItem("mobileNumber")===null){
+        navigate('/')
+       }
+    },[])
+
+
+   
 
     const handleChange =(index,value)=>{
         
@@ -34,13 +45,13 @@ const Login = () => {
             otp :Number(enteredOtp),
             dial_code:"+91"
             })
-            console.log(response.data)
+            console.log(response.data.token)
 
-            if(response.data.status === "Success"){
-                 window.localStorage.setItem("token",response.data.token);
-                 window.localStorage.setItem("userId",response.data.user_id);
-                 window.localStorage.setItem("userName",response.data.user_name);
-                
+            if(response.data.status_code === 200){
+                 window.localStorage.setItem("token",response.data.data.token);
+                 window.localStorage.setItem("userId",response.data.data.user_id);
+                 window.localStorage.setItem("userName",response.data.data.user_name);
+                navigate("/restaurant");
             }
             else {
             alert(response.data.error_message);
@@ -69,7 +80,7 @@ const Login = () => {
                 key={index}
                 type="text"
                 maxLength="1"
-                onChange={async(e) => await handleChange(index, e.target.value)}
+                onChange={(e) =>  handleChange(index, e.target.value)}
                 style={{width:"40px",height:"60px"}}
                 value={digit}
                 required

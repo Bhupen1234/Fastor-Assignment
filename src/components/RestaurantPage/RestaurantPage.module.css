@@ -1,0 +1,39 @@
+.container{
+    margin: 10px;
+}
+
+.icons{
+    width: 50vw;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+
+.icons>div>img{
+    width: 100px;
+    height: 100px;
+    
+}
+
+.headerWrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+}
+
+
+@media only screen and (max-width: 600px){
+    .icons>div>img{
+        width: 75px;
+        height: 75px;
+    }
+}
+
+@media only screen and (max-width: 480px){
+    .icons>div>img{
+        width: 65px;
+        height: 65px;
+    }
+}
