@@ -4,8 +4,11 @@ import { useNavigate, useParams } from 'react-router-dom'
 import styles from "./RestaurantDetails.module.css"
 import Star from "../../Icons/Star.png"
 import trendingOffer from "../../Icons/trendingOffer.png"
+import { useSnackbar } from 'notistack'
 const RestaurantDetails = ({restaurantData}) => {
     const navigate= useNavigate()
+
+    const enqueueSnackbar = useSnackbar()
 
 
  
@@ -17,7 +20,9 @@ const RestaurantDetails = ({restaurantData}) => {
    
     useEffect(()=>{
       if(localStorage.getItem("token")===null){
-        alert('You must be logged in to access Restaurant page')
+        
+        enqueueSnackbar('You must be logged in to access Restaurant page', { variant: "error" })
+
           navigate("/");
       }
 

@@ -6,8 +6,10 @@ import Offer from "../../Icons/discount.png"
 import axios from 'axios'
 import { Grid } from '@mui/material'
 import RestaurantCard from '../RestaurantCard/RestaurantCard'
+import { useSnackbar } from 'notistack'
 const RestaurantPage = ({getRestaurantData}) => {
     const navigate = useNavigate()
+    const { enqueueSnackbar } = useSnackbar();
     const [resturantData,setRestaurantData] =useState([])
 
 
@@ -31,7 +33,8 @@ const RestaurantPage = ({getRestaurantData}) => {
     useEffect(()=>{
         if(localStorage.getItem("token")===null){
         navigate('/');
-        alert('You must be logged in to access Restaurant page')
+       
+        enqueueSnackbar('You must be logged in to access Restaurant page', { variant: "error" })
         }
         else {
              const onLoadHandler =async()=>{
@@ -42,7 +45,8 @@ const RestaurantPage = ({getRestaurantData}) => {
                 }
                
                 else{
-                    alert('Can not fetch the restaurant data from the server')
+                    
+                    enqueueSnackbar('Can not fetch the restaurant data from the server', { variant: "error" })
                 }
 
              }

@@ -1,16 +1,22 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styles from "./Login.module.css"
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Register from '../Register/Register';
+import { useSnackbar } from 'notistack';
+
 const Login = () => {
     const [otp, setOtp] = useState(['', '', '', '', '', '']);
+    const { enqueueSnackbar } = useSnackbar();
 
     const [loader,setLoader]=useState(false)
     const navigate = useNavigate();
+    const otpInputs = useRef([]);
 
     useEffect(()=>{
        if(localStorage.getItem("mobileNumber")===null){
+        enqueueSnackbar('Please Enter the mobile number first', { variant: "warning" })
+
         navigate('/')
        }
     },[])
@@ -23,7 +29,9 @@ const Login = () => {
             const newOtp = [...otp];
             newOtp[index] = value;
             setOtp(newOtp);
-        
+            if (index < otp.length - 1 && value.length === 1) {
+              otpInputs.current[index + 1].focus();
+          }
     }
 
     const handleSubmit = async(e) => {
@@ -54,7 +62,9 @@ const Login = () => {
                 navigate("/restaurant");
             }
             else {
-            alert(response.data.error_message);
+           
+
+            enqueueSnackbar(response.data.error_message, { variant: "error" })
             }
             setLoader(false)
         } catch (error) {
@@ -83,12 +93,15 @@ const Login = () => {
                 onChange={(e) =>  handleChange(index, e.target.value)}
                 style={{width:"40px",height:"60px"}}
                 value={digit}
+                ref={(input) => (otpInputs.current[index] = input)} 
                 required
               />
             ))}
           </div>
         <button type="submit">{loader?"Verifing..." : "Verify"}</button>
+
       </form>
+      <p style={{fontWeight:"bolder"}}>Didn’t received code? <span style={{color:"#5574c6",cursor:"pointer"}} onClick={()=>navigate("/")}>Resend</span></p>
     </div>
   </div>
     </div>
