@@ -51,7 +51,8 @@ const Register = () => {
         <form onSubmit={async(e)=>await handleregister(e)}>
           <input 
             type="text" 
-           
+            minLength={10}
+           maxLength={10}
             onChange={(e) => setMobileNumber(e.target.value)} 
             placeholder="Enter Your Mobile Number" 
             required 
